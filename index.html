@@ -1,82 +1,893 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taha AI Studio</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #101322;
-  color: white;
-  line-height: 1.8;
-}
-header {
-  text-align: center;
-  padding: 30px 10px;
-}
-h1 { color: #55d6ff; }
-section {
-  background: #1d2238;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 12px;
-}
-a { color: #70d9ff; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+
+  <title>Taha AI Studio | استوديو طه للذكاء الاصطناعي</title>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #151d32;
+      --card2: #1b2640;
+      --text: #f4f7ff;
+      --muted: #aab6d0;
+      --blue: #55d6ff;
+      --purple: #9c7bff;
+      --green: #38d996;
+      --border: #2b3754;
+      --red: #ff7272;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Tahoma, sans-serif;
+      line-height: 1.8;
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(100% - 28px, 1000px);
+      margin: auto;
+    }
+
+    header {
+      padding: 30px 0 24px;
+      background:
+        radial-gradient(ellipse at top right, #253b70 0, transparent 60%),
+        var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: grid;
+      place-items: center;
+      color: #10172a;
+      font-size: 28px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-size: clamp(23px, 5vw, 34px);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 5px 0 0;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      border: 1px solid #40577b;
+      border-radius: 30px;
+      color: var(--blue);
+      font-size: 13px;
+    }
+
+    main {
+      padding: 25px 0 50px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .stat, .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 25px;
+      color: var(--blue);
+    }
+
+    .card {
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 21px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 15px 0 6px;
+    }
+
+    input, textarea, select {
+      display: block;
+      width: 100%;
+      color: var(--text);
+      background: #0d1427;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 12px;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--blue);
+    }
+
+    textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    select option {
+      background: #151d32;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 11px;
+      padding: 11px 17px;
+      font-weight: bold;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--blue), #83a8ff);
+      color: #091225;
+    }
+
+    .secondary {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .danger {
+      background: #492535;
+      color: #ffd8df;
+    }
+
+    .notice {
+      padding: 13px;
+      border-radius: 11px;
+      background: #172c32;
+      border: 1px solid #27544f;
+      color: #a9f5d7;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    .video-item {
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 15px;
+      margin-top: 12px;
+      background: #10182b;
+      overflow-wrap: anywhere;
+    }
+
+    .video-item h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .video-item p {
+      color: var(--muted);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: #283454;
+      color: var(--blue);
+      font-size: 12px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 25px 10px;
+      color: var(--muted);
+    }
+
+    .link {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 25px 10px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    @media (max-width: 520px) {
+      .stats {
+        gap: 7px;
+      }
+
+      .stat {
+        padding: 12px 8px;
+      }
+
+      .stat strong {
+        font-size: 21px;
+      }
+
+      .stat span {
+        font-size: 11px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .btn {
+        flex: 1 1 auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <header>
-<h1>Taha AI Studio</h1>
-<p>Video Creation and Content Management</p>
+  <div class="container">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div>
+        <h1>Taha AI Studio</h1>
+        <p class="subtitle">استوديو طه للذكاء الاصطناعي</p>
+      </div>
+    </div>
+
+    <span class="badge">لوحة إدارة المحتوى العربي</span>
+  </div>
 </header>
 
-<section>
-<h2>About</h2>
-<p>
-Taha AI Studio is a project for preparing,
-organizing, and managing video content.
-Users can review their videos before sharing them.
-</p>
-</section>
+<main class="container">
 
-<section id="terms">
-<h2>Terms of Service</h2>
-<p>
-Users are responsible for the content they create
-and share. Users must respect applicable laws,
-copyrights, and the terms of the platforms they use.
-The service is provided as available.
-</p>
-</section>
+  <section class="stats">
+    <div class="stat">
+      <span>إجمالي الأفكار</span>
+      <strong id="totalCount">0</strong>
+    </div>
 
-<section id="privacy">
-<h2>Privacy Policy</h2>
-<p>
-This website is an informational page.
-It does not provide account login forms or request
-TikTok passwords. Do not submit passwords or
-sensitive personal information through this website.
-</p>
-<p>
-If the application later collects or processes
-personal data, this policy must be updated to explain
-what data is collected, how it is used, and how users
-can contact the operator.
-</p>
-</section>
+    <div class="stat">
+      <span>قيد التجهيز</span>
+      <strong id="pendingCount">0</strong>
+    </div>
 
-<section id="contact">
-<h2>Contact</h2>
-<p>
-For questions about this project, contact the
-application operator through their official contact channel.
-</p>
-</section>
+    <div class="stat">
+      <span>جاهز للمراجعة</span>
+      <strong id="readyCount">0</strong>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🎬 إعداد فكرة فيديو</h2>
+    <p class="hint">
+      اكتب فكرة الفيديو، وحدد نوع المحتوى، ثم احفظها في قائمة مشروعك.
+    </p>
+
+    <form id="ideaForm">
+
+      <label for="title">عنوان الفيديو</label>
+      <input
+        id="title"
+        maxlength="120"
+        placeholder="مثال: قصة نجاح غيرت حياة صاحبها"
+        required
+      >
+
+      <div class="row">
+        <div>
+          <label for="category">نوع المحتوى</label>
+          <select id="category">
+            <option>قصص واقعية</option>
+            <option>قصص النجاح والمال</option>
+            <option>قصص إسلامية</option>
+            <option>الرعب والغموض</option>
+            <option>معلومات مفيدة</option>
+            <option>تحفيز وتطوير الذات</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="duration">مدة الفيديو</label>
+          <select id="duration">
+            <option value="15">15 ثانية</option>
+            <option value="30" selected>30 ثانية</option>
+            <option value="60">60 ثانية</option>
+            <option value="90">90 ثانية</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="idea">فكرة الفيديو أو السيناريو</label>
+      <textarea
+        id="idea"
+        maxlength="10000"
+        placeholder="اكتب هنا ما تريد أن يتحدث عنه الفيديو..."
+        required
+      ></textarea>
+
+      <label for="status">حالة المشروع</label>
+      <select id="status">
+        <option value="pending">فكرة جديدة</option>
+        <option value="working">قيد التجهيز</option>
+        <option value="ready">جاهز للمراجعة</option>
+      </select>
+
+      <div class="buttons">
+        <button type="submit" class="btn primary">
+          ＋ حفظ الفكرة
+        </button>
+
+        <button type="button" id="clearForm" class="btn secondary">
+          مسح الحقول
+        </button>
+      </div>
+    </form>
+
+    <div class="notice">
+      ℹ️ هذه الصفحة تحفظ الأفكار في متصفح جهازك. لا تنشئ فيديو فعليًا
+      ولا ترفع المحتوى إلى TikTok تلقائيًا.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>📁 إدارة المشاريع</h2>
+    <p class="hint">
+      ابحث عن أفكارك، راجع حالتها، أو صدّرها إلى ملف JSON للاحتفاظ بنسخة.
+    </p>
+
+    <label for="search">البحث في المشاريع</label>
+    <input id="search" placeholder="اكتب عنوانًا أو كلمة للبحث...">
+
+    <label for="filter">تصفية حسب الحالة</label>
+    <select id="filter">
+      <option value="all">جميع المشاريع</option>
+      <option value="pending">أفكار جديدة</option>
+      <option value="working">قيد التجهيز</option>
+      <option value="ready">جاهز للمراجعة</option>
+    </select>
+
+    <div class="buttons">
+      <button id="exportBtn" class="btn secondary" type="button">
+        تنزيل نسخة احتياطية
+      </button>
+
+      <button id="importBtn" class="btn secondary" type="button">
+        استيراد نسخة احتياطية
+      </button>
+
+      <input
+        type="file"
+        id="importFile"
+        accept=".json,application/json"
+        hidden
+      >
+    </div>
+
+    <div id="projectList"></div>
+  </section>
+
+  <section class="card">
+    <h2>📱 الربط مع TikTok</h2>
+
+    <p>
+      يمكنك متابعة إعداد تطبيقك من بوابة المطورين الرسمية.
+      يحتاج النشر المباشر إلى تطبيق معتمد وصلاحيات مناسبة
+      وتفويض حساب TikTok.
+    </p>
+
+    <p>
+      <a
+        class="link"
+        href="https://developers.tiktok.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        فتح بوابة TikTok للمطورين ↗
+      </a>
+    </p>
+
+    <p class="hint">
+      وجود هذا الرابط لا يعني أن حسابك متصل أو أن النشر التلقائي أصبح مفعّلًا.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  Taha AI Studio © <span id="year"></span>
+  <br>
+  أداة محلية لتنظيم أفكار الفيديوهات والمحتوى.
+</footer>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "taha_ai_studio_projects_v1";
+
+const form = document.getElementById("ideaForm");
+const titleInput = document.getElementById("title");
+const categoryInput = document.getElementById("category");
+const durationInput = document.getElementById("duration");
+const ideaInput = document.getElementById("idea");
+const statusInput = document.getElementById("status");
+const searchInput = document.getElementById("search");
+const filterInput = document.getElementById("filter");
+const projectList = document.getElementById("projectList");
+
+let projects = loadProjects();
+let editingId = null;
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+function loadProjects() {
+  try {
+    const value = localStorage.getItem(STORAGE_KEY);
+    const data = value ? JSON.parse(value) : [];
+
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveProjects() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(projects)
+    );
+
+    return true;
+  } catch (error) {
+    alert(
+      "تعذر الحفظ في المتصفح. تحقق من مساحة التخزين أو إعدادات الخصوصية."
+    );
+
+    return false;
+  }
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, function (char) {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    };
+
+    return entities[char];
+  });
+}
+
+function statusName(status) {
+  const names = {
+    pending: "فكرة جديدة",
+    working: "قيد التجهيز",
+    ready: "جاهز للمراجعة"
+  };
+
+  return names[status] || names.pending;
+}
+
+function updateStats() {
+  document.getElementById("totalCount").textContent =
+    projects.length;
+
+  document.getElementById("pendingCount").textContent =
+    projects.filter(p => p.status === "pending").length;
+
+  document.getElementById("readyCount").textContent =
+    projects.filter(p => p.status === "ready").length;
+}
+
+function renderProjects() {
+  updateStats();
+
+  const query = searchInput.value.trim().toLowerCase();
+  const filter = filterInput.value;
+
+  const visible = projects.filter(function (project) {
+    const text = (
+      project.title + " " +
+      project.idea + " " +
+      project.category
+    ).toLowerCase();
+
+    const matchesSearch = text.includes(query);
+    const matchesFilter =
+      filter === "all" || project.status === filter;
+
+    return matchesSearch && matchesFilter;
+  });
+
+  if (visible.length === 0) {
+    projectList.innerHTML =
+      '<div class="empty">لا توجد مشاريع هنا بعد. أضف فكرتك الأولى أعلاه.</div>';
+
+    return;
+  }
+
+  projectList.innerHTML = visible.map(function (project) {
+    return `
+      <article class="video-item">
+        <h3>${escapeHTML(project.title)}</h3>
+
+        <span class="tag">${escapeHTML(project.category)}</span>
+        <span class="tag">${escapeHTML(statusName(project.status))}</span>
+        <span class="tag">${escapeHTML(project.duration)} ثانية</span>
+
+        <p>${escapeHTML(project.idea)}</p>
+
+        <p class="hint">
+          تاريخ الإضافة: ${escapeHTML(project.createdAt || "")}
+        </p>
+
+        <label for="status-${escapeHTML(project.id)}">
+          تحديث حالة المشروع
+        </label>
+
+        <select
+          id="status-${escapeHTML(project.id)}"
+          onchange="changeStatus('${escapeHTML(project.id)}', this.value)"
+        >
+          <option value="pending" ${project.status === "pending" ? "selected" : ""}>
+            فكرة جديدة
+          </option>
+
+          <option value="working" ${project.status === "working" ? "selected" : ""}>
+            قيد التجهيز
+          </option>
+
+          <option value="ready" ${project.status === "ready" ? "selected" : ""}>
+            جاهز للمراجعة
+          </option>
+        </select>
+
+        <div class="buttons">
+          <button
+            type="button"
+            class="btn secondary"
+            onclick="editProject('${escapeHTML(project.id)}')"
+          >
+            تعديل
+          </button>
+
+          <button
+            type="button"
+            class="btn secondary"
+            onclick="copyProject('${escapeHTML(project.id)}')"
+          >
+            نسخ النص
+          </button>
+
+          <button
+            type="button"
+            class="btn danger"
+            onclick="deleteProject('${escapeHTML(project.id)}')"
+          >
+            حذف
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const title = titleInput.value.trim();
+  const idea = ideaInput.value.trim();
+
+  if (!title || !idea) {
+    alert("يرجى كتابة عنوان الفيديو وفكرته.");
+    return;
+  }
+
+  if (editingId) {
+    const project = projects.find(p => p.id === editingId);
+
+    if (!project) {
+      editingId = null;
+      return;
+    }
+
+    project.title = title;
+    project.category = categoryInput.value;
+    project.duration = durationInput.value;
+    project.idea = idea;
+    project.status = statusInput.value;
+  } else {
+    projects.unshift({
+      id: (
+        Date.now().toString(36) +
+        Math.random().toString(36).slice(2, 8)
+      ),
+      title: title,
+      category: categoryInput.value,
+      duration: durationInput.value,
+      idea: idea,
+      status: statusInput.value,
+      createdAt: new Date().toLocaleString("ar")
+    });
+  }
+
+  if (!saveProjects()) return;
+
+  resetForm();
+  renderProjects();
+
+  alert("تم حفظ المشروع بنجاح على هذا المتصفح.");
+});
+
+function resetForm() {
+  form.reset();
+  editingId = null;
+
+  const submitButton = form.querySelector(
+    'button[type="submit"]'
+  );
+
+  submitButton.textContent = "＋ حفظ الفكرة";
+}
+
+document.getElementById("clearForm").addEventListener(
+  "click",
+  resetForm
+);
+
+function changeStatus(id, status) {
+  const project = projects.find(p => p.id === id);
+  if (!project) return;
+
+  project.status = status;
+
+  if (saveProjects()) {
+    renderProjects();
+  }
+}
+
+function editProject(id) {
+  const project = projects.find(p => p.id === id);
+  if (!project) return;
+
+  editingId = id;
+
+  titleInput.value = project.title;
+  categoryInput.value = project.category;
+  durationInput.value = project.duration;
+  ideaInput.value = project.idea;
+  statusInput.value = project.status;
+
+  form.querySelector('button[type="submit"]').textContent =
+    "حفظ التعديلات";
+
+  titleInput.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+function deleteProject(id) {
+  const project = projects.find(p => p.id === id);
+  if (!project) return;
+
+  if (!confirm("هل تريد حذف هذا المشروع نهائيًا من هذا المتصفح؟")) {
+    return;
+  }
+
+  projects = projects.filter(p => p.id !== id);
+
+  if (editingId === id) {
+    resetForm();
+  }
+
+  if (saveProjects()) {
+    renderProjects();
+  }
+}
+
+async function copyProject(id) {
+  const project = projects.find(p => p.id === id);
+  if (!project) return;
+
+  const text =
+    "عنوان الفيديو: " + project.title + "\n" +
+    "نوع المحتوى: " + project.category + "\n" +
+    "المدة: " + project.duration + " ثانية\n\n" +
+    project.idea;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("تم نسخ تفاصيل المشروع.");
+  } catch (error) {
+    const area = document.createElement("textarea");
+    area.value = text;
+    document.body.appendChild(area);
+    area.select();
+
+    const success = document.execCommand("copy");
+    area.remove();
+
+    alert(
+      success
+        ? "تم نسخ تفاصيل المشروع."
+        : "تعذر النسخ التلقائي. يمكنك تحديد النص ونسخه يدويًا."
+    );
+  }
+}
+
+searchInput.addEventListener("input", renderProjects);
+filterInput.addEventListener("change", renderProjects);
+
+document.getElementById("exportBtn").addEventListener(
+  "click",
+  function () {
+    const blob = new Blob(
+      [JSON.stringify(projects, null, 2)],
+      { type: "application/json;charset=utf-8" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "taha-ai-studio-backup.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  }
+);
+
+document.getElementById("importBtn").addEventListener(
+  "click",
+  function () {
+    document.getElementById("importFile").click();
+  }
+);
+
+document.getElementById("importFile").addEventListener(
+  "change",
+  async function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+
+      if (!Array.isArray(data)) {
+        throw new Error("Invalid backup");
+      }
+
+      const valid = data.every(function (p) {
+        return p &&
+          typeof p.title === "string" &&
+          typeof p.idea === "string" &&
+          typeof p.category === "string" &&
+          ["pending", "working", "ready"].includes(p.status);
+      });
+
+      if (!valid) {
+        throw new Error("Invalid project data");
+      }
+
+      if (!confirm("سيتم استبدال قائمة المشاريع الحالية بالنسخة المستوردة. هل تريد المتابعة؟")) {
+        return;
+      }
+
+      projects = data.map(function (p) {
+        return {
+          id: String(p.id || (
+            Date.now().toString(36) +
+            Math.random().toString(36).slice(2, 8)
+          )),
+          title: p.title,
+          idea: p.idea,
+          category: p.category,
+          duration: String(p.duration || "30"),
+          status: p.status,
+          createdAt: p.createdAt || ""
+        };
+      });
+
+      if (saveProjects()) {
+        resetForm();
+        renderProjects();
+        alert("تم استيراد النسخة الاحتياطية.");
+      }
+    } catch (error) {
+      alert("تعذر استيراد الملف. اختر نسخة JSON صحيحة من هذا المشروع.");
+    } finally {
+      event.target.value = "";
+    }
+  }
+);
+
+renderProjects();
+</script>
 
 </body>
 </html>
